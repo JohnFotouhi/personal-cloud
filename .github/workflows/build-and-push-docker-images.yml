@@ -29,5 +29,5 @@ jobs:
       with:
         context: bitwarden-backup
         push: true
-        tags: ${{ secret.DOCKERHUB_USERNAME }}/bitwarden-backup:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/bitwarden-backup:latest
     
