@@ -4,6 +4,13 @@ on:
   push:
     branches: 
       - main
+  workflow_dispatch:
+    inputs:
+      test:
+        description: 'Run in test mode'
+        required: true
+        default: true
+        type: boolean
 
 jobs:
   build:
