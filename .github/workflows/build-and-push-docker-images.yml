@@ -27,7 +27,7 @@ jobs:
     - name: Build and push bitwarden-backup
       uses: docker/build-push-action@v6
       with:
-        context: bitwarden_backup
+        context: ./bitwarden_backup
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/bitwarden-backup:latest
     
