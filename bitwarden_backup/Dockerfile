@@ -8,7 +8,10 @@ RUN apt update && apt install -y curl unzip libsecret-1-0 jq python3 python3-pip
 COPY src/ /bitwarden_workdir
 COPY requirements.txt /bitwarden_workdir/requirements.txt
 
-RUN apt update && apt install -y curl jq python3 python3-pip python3-venv
+RUN apt install -y curl jq python3 python3-pip python3-venv
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt install -y nodejs
+RUN npm install -g @bitwarden/cli
 RUN python3 -m venv /bitwarden_venv
 ENV PATH="/bitwarden_venv/bin:$PATH"
 RUN pip3 install --no-cache-dir -r /bitwarden_workdir/requirements.txt
