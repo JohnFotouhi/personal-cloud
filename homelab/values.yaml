@@ -1,0 +1,92 @@
+# Default values for homelab.
+
+# CronJob configuration
+cronJob:
+  # Run daily at 9 PM
+  schedule: "0 21 * * *"
+  # Number of successful finished jobs to retain
+  successfulJobsHistoryLimit: 3
+  # Number of failed finished jobs to retain
+  failedJobsHistoryLimit: 1
+
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+images:
+  bitwarden_backup:
+    repository: jfotouhi/bitwarden-backup
+    # This sets the pull policy for images.
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+
+# This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+# This is to override the chart name.
+nameOverride: ""
+fullnameOverride: ""
+
+# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+# This is for setting Kubernetes Labels to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+backupNode:
+  # Name of the node to run the backup job on
+  nodeName: "oldasus"
+
+# Additional volumes on the output Deployment definition.
+volumes:
+- name: backup-dir
+  hostPath:
+    path: /backups
+    type: Directory
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts:
+- name: backup-dir
+  mountPath: "/backups"
+  readOnly: false
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
