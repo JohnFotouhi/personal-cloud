@@ -5,7 +5,7 @@ import subprocess
 
 logger = logging.getLogger(__name__)
 
-def login(client):
+def login():
     """
     Logs in to Bitwarden using the CLI and sets the BW_SESSION environment variable.
     Raises:
