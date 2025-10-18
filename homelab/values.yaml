@@ -20,6 +20,30 @@ images:
     tag: ""
 
 
+env:
+  - name: BW_CLIENTID
+    valueFrom:
+      secretKeyRef:
+        name: bitwarden-secrets
+        key: bw-clientid
+  - name: BW_CLIENTSECRET
+    valueFrom:
+      secretKeyRef:
+        name: bitwarden-secrets
+        key: bw-clientsecret
+  - name: BW_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: bitwarden-secrets
+        key: bw-password
+  - name: ENCRYPTION_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: bitwarden-secrets
+        key: encryption-password
+  - name: BACKUP_DIR
+    value: /backups
+
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.

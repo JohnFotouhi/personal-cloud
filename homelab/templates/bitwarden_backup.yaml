@@ -40,8 +40,12 @@ spec:
               securityContext:
                 {{- toYaml . | nindent 16 }}
               {{- end }}
-              image: "{{ .Values.images.bitwarden_backup.repository }}:{{ .Values.images.bitwarden_backup.tag | default latest }}"
+              image: "{{ .Values.images.bitwarden_backup.repository }}:{{ .Values.images.bitwarden_backup.tag | default "latest" }}"
               imagePullPolicy: {{ .Values.images.bitwarden_backup.pullPolicy }}
+              {{- with .Values.env }}
+              env:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
               {{- with .Values.resources }}
               resources:
                 {{- toYaml . | nindent 16 }}
