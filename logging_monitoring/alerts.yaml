@@ -1,0 +1,30 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: custom-alerts
+  namespace: monitoring
+  labels:
+    release: prometheus
+spec:
+  groups:
+  - name: node-temperature-alerts
+    rules:
+    - alert: NodeHighTemperature
+      expr: node_thermal_zone_temp > 90
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: "High temperature on node {{ $labels.node }}"
+        description: "Node temperature is above 90°C for more than 2 minutes. Current value: {{ $value }}°C"
+
+  - name: job-failure-alerts
+    rules:
+    - alert: JobFailed
+      expr: kube_job_status_failed > 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Job {{ $labels.job_name }} has failed"
+        description: "Job {{ $labels.job_name }} has failed. Check the job for details."
