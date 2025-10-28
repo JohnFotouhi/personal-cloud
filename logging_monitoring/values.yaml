@@ -5,9 +5,9 @@ alertmanager:
   config:
     global:
       smtp_smarthost: 'smtp.gmail.com:587'
-      smtp_from: '$smtp_username'
-      smtp_auth_username: '$smtp_username'
-      smtp_auth_password: '$smtp_password'
+      smtp_from: '${smtp_username}'
+      smtp_auth_username: '${smtp_username}'
+      smtp_auth_password: '${smtp_password}'
       smtp_require_tls: true
     route:
       receiver: 'email-alerts'
@@ -25,9 +25,11 @@ alertmanager:
     receivers:
       - name: 'email-alerts'
         email_configs:
-          - to: '$smtp_address'
+          - to: '${smtp_address}'
             send_resolved: false
 
-prometheusRuleSelector:
-  matchLabels:
-    role: custom-alerts
+prometheus:
+  prometheusSpec:
+    ruleSelector:
+      matchLabels:
+        release: prometheus
