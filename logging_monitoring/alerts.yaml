@@ -14,6 +14,7 @@ spec:
       for: 2m
       labels:
         severity: critical
+        type: homelab
       annotations:
         summary: "High temperature on node {{ $labels.node }}"
         description: "Node temperature is above 90°C for more than 2 minutes. Current value: {{ $value }}°C"
@@ -25,6 +26,7 @@ spec:
       for: 5m
       labels:
         severity: critical
+        type: homelab
       annotations:
         summary: "Job {{ $labels.job_name }} has failed"
         description: "Job {{ $labels.job_name }} has failed. Check the job for details."
