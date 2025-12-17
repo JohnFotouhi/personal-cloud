@@ -1,0 +1,62 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: nodesecurityconfigs.homelab.fotouhi.io
+spec:
+  group: homelab.fotouhi.io
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                nodeSelector:
+                  type: object
+                sshConfig:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                    port:
+                      type: integer
+                      default: 22
+                      minimum: 1
+                      maximum: 65535
+                    passwordAuthentication:
+                      type: boolean
+                    x11Forwarding:
+                      type: boolean
+                    kbdInteractiveAuthentication:
+                      type: boolean
+                firewallConfig:
+                  type: object   
+                  properties:
+                    enabled:
+                      type: boolean
+                    logging:
+                      type: boolean
+                      default: true
+                    rules:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          action:
+                            type: string
+                            enum: ["allow", "deny", "reject", "limit"]
+                          from:
+                            type: string
+                          to:
+                            type: string
+  scope: Cluster
+  names:
+    plural: nodesecurityconfigs
+    singular: nodesecurityconfig
+    kind: NodeSecurityConfig
+    shortNames:
+      - nsc

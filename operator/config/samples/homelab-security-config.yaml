@@ -1,0 +1,21 @@
+apiVersion: homelab.fotouhi.io/v1alpha1
+kind: NodeSecurityConfig
+metadata:
+  name: homelab-security-config
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/worker: "true"
+  
+  sshConfig:
+    enabled: true
+    passwordAuthentication: false
+    x11Forwarding: false
+    kbdInteractiveAuthentication: false
+  
+  firewallConfig:
+    enabled: true
+    logging: true
+    rules:
+      - action: allow
+        from: "192.168.1.0/24"
+        to: "any port 22"
